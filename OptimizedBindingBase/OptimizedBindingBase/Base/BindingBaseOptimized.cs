@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using OptimizedBindingBase.Extensions;
+using Extensions;
 
 namespace OptimizedBindingBase.Base
 {
@@ -15,8 +15,8 @@ namespace OptimizedBindingBase.Base
 
         public T Get<T>([CallerMemberName] string propertyName = "")
         {
-            var result = _propertyFieldDictionary.GetValue(propertyName);
-            return result.OfType<T>();
+            var result = _propertyFieldDictionary.GetValueOrDefault(propertyName);
+            return result.Cast<T>();
         }
 
         public bool Set<T>(T newValue, [CallerMemberName] string propertyName = "")
