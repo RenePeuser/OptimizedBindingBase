@@ -15,8 +15,12 @@ namespace OptimizedBindingBase.Base
 
         public T Get<T>([CallerMemberName] string propertyName = "")
         {
-            var result = _propertyFieldDictionary.GetValueOrDefault(propertyName);
-            return result.Cast<T>();
+            if (!_propertyFieldDictionary.ContainsKey(propertyName))
+            {
+                return default(T);
+            }
+
+            return _propertyFieldDictionary[propertyName].Cast<T>();
         }
 
         public bool Set<T>(T newValue, [CallerMemberName] string propertyName = "")
